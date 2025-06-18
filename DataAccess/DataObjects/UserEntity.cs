@@ -1,0 +1,9 @@
+using NuciDAL.DataObjects;
+
+namespace ProfiBotServer.DataAccess.DataObjects
+{
+    public sealed class UserEntity : EntityBase
+    {
+        public string Password { get; set; }
+    }
+}

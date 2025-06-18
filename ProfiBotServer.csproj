@@ -3,12 +3,20 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>ProfiBotServer</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Automapper" Version="14.0.0" />
+    <PackageReference Include="NuciAPI" Version="1.0.1" />
+    <PackageReference Include="NuciDAL" Version="2.2.2" />
+    <PackageReference Include="NuciSecurity.HMAC" Version="4.1.1" />
   </ItemGroup>
 
 </Project>
