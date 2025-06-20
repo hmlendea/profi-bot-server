@@ -5,5 +5,7 @@ namespace ProfiBotServer.Service.Models
         public string Id { get; set; }
 
         public string Password { get; set; }
+
+        public string SmtpNotificationRecipient { get; set; }
     }
 }

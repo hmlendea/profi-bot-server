@@ -35,7 +35,9 @@ namespace ProfiBotServer.Service
             prizeRepository.Add(mapper.Map<PrizeEntity>(prize));
             prizeRepository.ApplyChanges();
 
-            NotifyPrize(prize);
+            User user = mapper.Map<User>(userRepository.TryGet(request.UserPhoneNumber));
+
+            NotifyPrize(user, prize);
 
             logger.Debug(
                 MyOperation.RecordPrize,
@@ -44,10 +46,16 @@ namespace ProfiBotServer.Service
                 new LogInfo(MyLogInfoKey.PrizeId, prize.Id));
         }
 
-        void NotifyPrize(Prize prize)
+        void NotifyPrize(User user, Prize prize)
         {
-            string recipient = "profi.7lgpy@simplelogin.fr";
+            if (!string.IsNullOrWhiteSpace(user.SmtpNotificationRecipient))
+            {
+                NotifyPrizeViaSmtp(user.SmtpNotificationRecipient, prize);
+            }
+        }
 
+        void NotifyPrizeViaSmtp(string recipient, Prize prize)
+        {
             logger.Info(
                 MyOperation.SmtpNotification,
                 OperationStatus.Started,
@@ -57,7 +65,7 @@ namespace ProfiBotServer.Service
             try
             {
                 smtpNotifier.Send(
-                    "todo",
+                    recipient,
                     "Profi Prize Won!",
                     $"User ID: {prize.UserId}\nPrize ID: {prize.Id}\nTimestamp: {prize.Timestamp}");
             }

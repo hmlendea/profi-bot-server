@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using System.Net.Mail;
 using ProfiBotServer.Configuration;
@@ -9,7 +8,6 @@ namespace ProfiBotServer.Service.Notifications
     {
         public void Send(string recipient, string subject, string body)
         {
-            Console.WriteLine($"{smtpNotifierSettings.Host}:{smtpNotifierSettings.Port} - {smtpNotifierSettings.Username}:{smtpNotifierSettings.Password}");
             using var client = new SmtpClient(smtpNotifierSettings.Host, smtpNotifierSettings.Port)
             {
                 Credentials = new NetworkCredential(smtpNotifierSettings.Username, smtpNotifierSettings.Password),
