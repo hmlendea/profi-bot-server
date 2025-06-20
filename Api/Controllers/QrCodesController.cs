@@ -14,8 +14,26 @@ namespace ProfiBotServer.Api.Controllers
     [ApiController]
     public class QrCodesController(IQrCodeService service) : ControllerBase
     {
+        [HttpPost]
+        public ActionResult Add([FromBody] AddQrCodeRequest request)
+        {
+            if (request is null)
+            {
+                return BadRequest(new ErrorResponse(ErrorResponseMessages.InvalidRequest));
+            }
+
+            try
+            {
+                return Ok(SuccessResponseMessages.Default);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ErrorResponse(ex));
+            }
+        }
+
         [HttpGet]
-        public ActionResult RecordPrize([FromBody] GetQrCodeRequest request)
+        public ActionResult GetRandom([FromBody] GetQrCodeRequest request)
         {
             if (request is null)
             {
