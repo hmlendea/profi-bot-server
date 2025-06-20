@@ -19,6 +19,32 @@ namespace ProfiBotServer.Service
         IMapper mapper,
         ILogger logger) : IQrCodeService
     {
+        public void Add(AddQrCodeRequest request)
+        {
+            logger.Info(
+                MyOperation.AddQrCode,
+                OperationStatus.Started,
+                new LogInfo(MyLogInfoKey.UserId, request.UserPhoneNumber),
+                new LogInfo(MyLogInfoKey.QrCodeId, request.Id));
+
+            ValidateRequest(request?.UserPhoneNumber, request);
+
+            QrCode qrCode = new()
+            {
+                Id = request.Id,
+                Description = request.Description
+            };
+
+            qrCodeRepository.Add(mapper.Map<QrCodeEntity>(qrCode));
+            qrCodeRepository.ApplyChanges();
+
+            logger.Debug(
+                MyOperation.AddQrCode,
+                OperationStatus.Success,
+                new LogInfo(MyLogInfoKey.UserId, request.UserPhoneNumber),
+                new LogInfo(MyLogInfoKey.QrCodeId, qrCode.Id));
+        }
+
         public GetQrCodeResponse GetRandom(GetQrCodeRequest request)
         {
             logger.Info(
