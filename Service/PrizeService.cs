@@ -15,8 +15,8 @@ namespace ProfiBotServer.Service
 {
     public class PrizeService(
         ISmtpNotifier smtpNotifier,
-        IRepository<PrizeEntity> prizeRepository,
-        IRepository<UserEntity> userRepository,
+        IFileRepository<PrizeEntity> prizeRepository,
+        IFileRepository<UserEntity> userRepository,
         IMapper mapper,
         ILogger logger) : IPrizeService
     {

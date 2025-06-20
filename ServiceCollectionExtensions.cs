@@ -38,10 +38,12 @@ namespace ProfiBotServer
 
         public static IServiceCollection AddCustomServices(this IServiceCollection services) => services
             .AddSingleton<ILogger, NuciLogger>()
-            .AddSingleton<IRepository<PrizeEntity>>(x => new JsonRepository<PrizeEntity>(dataStoreSettings.PrizeStorePath))
-            .AddSingleton<IRepository<UserEntity>>(x => new JsonRepository<UserEntity>(dataStoreSettings.UserStorePath))
+            .AddSingleton<IFileRepository<PrizeEntity>>(x => new JsonRepository<PrizeEntity>(dataStoreSettings.PrizeStorePath))
+            .AddSingleton<IFileRepository<QrCodeEntity>>(x => new JsonRepository<QrCodeEntity>(dataStoreSettings.QrCodeStorePath))
+            .AddSingleton<IFileRepository<UserEntity>>(x => new JsonRepository<UserEntity>(dataStoreSettings.UserStorePath))
             .AddSingleton<ISmtpNotifier, SmtpNotifier>()
             .AddSingleton<IPrizeService, PrizeService>()
+            .AddSingleton<IQrCodeService, QrCodeService>()
             .AddAutoMapper(typeof(DataAccessMappingProfile))
             .AddAutoMapper(typeof(ServiceMappingProfile));
     }

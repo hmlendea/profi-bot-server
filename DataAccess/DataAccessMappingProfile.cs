@@ -11,6 +11,7 @@ namespace ProfiBotServer.DataAccess
         {
             CreateMap<Prize, PrizeEntity>()
                 .ForMember(dest => dest.Timestamp, opt => opt.MapFrom(src => src.Timestamp.ToString("o")));
+            CreateMap<QrCode, QrCodeEntity>();
             CreateMap<User, UserEntity>();
         }
     }

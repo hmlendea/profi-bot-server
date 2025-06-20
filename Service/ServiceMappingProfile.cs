@@ -16,6 +16,7 @@ namespace ProfiBotServer.Service
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserPhoneNumber));
 
             CreateMap<PrizeEntity, Prize>();
+            CreateMap<QrCodeEntity, QrCode>();
             CreateMap<UserEntity, User>();
         }
     }
