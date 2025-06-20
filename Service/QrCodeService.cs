@@ -34,7 +34,8 @@ namespace ProfiBotServer.Service
             GetQrCodeResponse response = new()
             {
                 Id = qrCode.Id,
-                Url = qrCode.Url
+                Url = qrCode.Url,
+                Description = qrCode.Description
             };
             response.HmacToken = HmacEncoder.GenerateToken(response, user.Password);
 

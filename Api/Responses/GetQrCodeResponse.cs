@@ -8,7 +8,10 @@ namespace ProfiBotServer.Api.Responses
         [HmacOrder(1)]
         public string Id { get; set; }
 
-        [HmacIgnore]
+        [HmacOrder(2)]
         public string Url { get; set; }
+
+        [HmacOrder(3)]
+        public string Description { get; set; }
     }
 }
