@@ -5,6 +5,8 @@ namespace ProfiBotServer.Service
 {
     public interface IQrCodeService
     {
+        void Add(AddQrCodeRequest request);
+
         GetQrCodeResponse GetRandom(GetQrCodeRequest request);
     }
 }

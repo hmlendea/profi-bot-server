@@ -24,7 +24,9 @@ namespace ProfiBotServer.Api.Controllers
 
             try
             {
-                return Ok(SuccessResponseMessages.Default);
+                service.Add(request);
+
+                return Ok(SuccessResponse.Default);
             }
             catch (Exception ex)
             {

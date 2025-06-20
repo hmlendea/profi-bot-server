@@ -14,8 +14,8 @@ namespace ProfiBotServer.Api.Requests
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [HmacOrder(1)]
+        [HmacOrder(3)]
         [JsonPropertyName("phoneNr")]
-        public string UserId { get; set; }
+        public string UserPhoneNumber { get; set; }
     }
 }
