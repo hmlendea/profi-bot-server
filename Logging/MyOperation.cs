@@ -7,5 +7,7 @@ namespace ProfiBotServer.Logging
         MyOperation(string name) : base(name) { }
 
         public static Operation RecordPrize => new MyOperation(nameof(RecordPrize));
+
+        public static Operation SmtpNotification => new MyOperation(nameof(SmtpNotification));
     }
 }

@@ -9,5 +9,7 @@ namespace ProfiBotServer.Logging
         public static LogInfoKey UserId => new MyLogInfoKey(nameof(UserId));
 
         public static LogInfoKey PrizeId => new MyLogInfoKey(nameof(PrizeId));
+
+        public static LogInfoKey Recipient => new MyLogInfoKey(nameof(Recipient));
     }
 }
