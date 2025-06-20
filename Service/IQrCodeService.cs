@@ -1,10 +1,10 @@
 using ProfiBotServer.Api.Requests;
-using ProfiBotServer.Service.Models;
+using ProfiBotServer.Api.Responses;
 
 namespace ProfiBotServer.Service
 {
     public interface IQrCodeService
     {
-        QrCode GetRandom(GetQrCodeRequest request);
+        GetQrCodeResponse GetRandom(GetQrCodeRequest request);
     }
 }

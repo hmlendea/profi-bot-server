@@ -6,6 +6,7 @@ using NuciDAL.Repositories;
 using NuciLog.Core;
 using NuciSecurity.HMAC;
 using ProfiBotServer.Api.Requests;
+using ProfiBotServer.Api.Responses;
 using ProfiBotServer.DataAccess.DataObjects;
 using ProfiBotServer.Logging;
 using ProfiBotServer.Service.Models;
@@ -13,12 +14,12 @@ using ProfiBotServer.Service.Models;
 namespace ProfiBotServer.Service
 {
     public class QrCodeService(
-        IRepository<QrCodeEntity> qrCodeRepository,
-        IRepository<UserEntity> userRepository,
+        IFileRepository<QrCodeEntity> qrCodeRepository,
+        IFileRepository<UserEntity> userRepository,
         IMapper mapper,
         ILogger logger) : IQrCodeService
     {
-        public QrCode GetRandom(GetQrCodeRequest request)
+        public GetQrCodeResponse GetRandom(GetQrCodeRequest request)
         {
             logger.Info(
                 MyOperation.GetQrCode,
@@ -27,11 +28,15 @@ namespace ProfiBotServer.Service
 
             ValidateRequest(request?.UserPhoneNumber, request);
 
-            QrCode qrCode = new()
+            User user = mapper.Map<User>(userRepository.Get(request.UserPhoneNumber));
+            QrCode qrCode = mapper.Map<QrCode>(qrCodeRepository.GetRandom());
+
+            GetQrCodeResponse response = new()
             {
-                Id = "0",
-                Description = "TODO"
+                Id = qrCode.Id,
+                Url = qrCode.Url
             };
+            response.HmacToken = HmacEncoder.GenerateToken(response, user.Password);
 
             logger.Debug(
                 MyOperation.GetQrCode,
@@ -39,7 +44,7 @@ namespace ProfiBotServer.Service
                 new LogInfo(MyLogInfoKey.UserId, request.UserPhoneNumber),
                 new LogInfo(MyLogInfoKey.QrCodeId, qrCode.Id));
 
-            return null;
+            return response;
         }
 
         void ValidateRequest<TRequest>(string userId, TRequest request) where TRequest : Request

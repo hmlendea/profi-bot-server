@@ -24,17 +24,12 @@ namespace ProfiBotServer.Api.Controllers
 
             try
             {
-                QrCode qrCode = service.GetRandom(request);
+                GetQrCodeResponse response = service.GetRandom(request);
 
-                if (qrCode is null)
+                if (response is null)
                 {
                     return NotFound(new ErrorResponse("No QR code was found."));
                 }
-
-                GetQrCodeResponse response = new()
-                {
-                    Id = qrCode.Id
-                };
 
                 return Ok(response);
             }
