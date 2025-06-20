@@ -4,12 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using ProfiBotServer.Api.Requests;
 
 using NuciAPI.Responses;
+using ProfiBotServer.Service;
+using ProfiBotServer.Api.Responses;
+using ProfiBotServer.Service.Models;
 
 namespace ProfiBotServer.Api.Controllers
 {
     [Route("QR")]
     [ApiController]
-    public class QrCodesController() : ControllerBase
+    public class QrCodesController(IQrCodeService service) : ControllerBase
     {
         [HttpGet]
         public ActionResult RecordPrize([FromBody] GetQrCodeRequest request)
@@ -21,7 +24,19 @@ namespace ProfiBotServer.Api.Controllers
 
             try
             {
-                return Ok(SuccessResponse.Default);
+                QrCode qrCode = service.GetRandom(request);
+
+                if (qrCode is null)
+                {
+                    return NotFound(new ErrorResponse("No QR code was found."));
+                }
+
+                GetQrCodeResponse response = new()
+                {
+                    Id = qrCode.Id
+                };
+
+                return Ok(response);
             }
             catch (Exception ex)
             {

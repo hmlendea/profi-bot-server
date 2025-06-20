@@ -43,6 +43,7 @@ namespace ProfiBotServer
             .AddSingleton<IRepository<UserEntity>>(x => new JsonRepository<UserEntity>(dataStoreSettings.UserStorePath))
             .AddSingleton<ISmtpNotifier, SmtpNotifier>()
             .AddSingleton<IPrizeService, PrizeService>()
+            .AddSingleton<IQrCodeService, QrCodeService>()
             .AddAutoMapper(typeof(DataAccessMappingProfile))
             .AddAutoMapper(typeof(ServiceMappingProfile));
     }

@@ -8,6 +8,8 @@ namespace ProfiBotServer.Logging
 
         public static Operation RecordPrize => new MyOperation(nameof(RecordPrize));
 
+        public static Operation GetQrCode => new MyOperation(nameof(GetQrCode));
+
         public static Operation SmtpNotification => new MyOperation(nameof(SmtpNotification));
     }
 }
