@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Security.Authentication;
 using AutoMapper;
 using NuciAPI.Requests;
@@ -10,10 +9,12 @@ using ProfiBotServer.Api.Requests;
 using ProfiBotServer.DataAccess.DataObjects;
 using ProfiBotServer.Logging;
 using ProfiBotServer.Service.Models;
+using ProfiBotServer.Service.Notifications;
 
 namespace ProfiBotServer.Service
 {
     public class PrizeService(
+        ISmtpNotifier smtpNotifier,
         IRepository<PrizeEntity> prizeRepository,
         IRepository<UserEntity> userRepository,
         IMapper mapper,
@@ -34,11 +35,57 @@ namespace ProfiBotServer.Service
             prizeRepository.Add(mapper.Map<PrizeEntity>(prize));
             prizeRepository.ApplyChanges();
 
+            User user = mapper.Map<User>(userRepository.TryGet(request.UserPhoneNumber));
+
+            NotifyPrize(user, prize);
+
             logger.Debug(
                 MyOperation.RecordPrize,
                 OperationStatus.Success,
                 new LogInfo(MyLogInfoKey.UserId, request.UserPhoneNumber),
                 new LogInfo(MyLogInfoKey.PrizeId, prize.Id));
+        }
+
+        void NotifyPrize(User user, Prize prize)
+        {
+            if (!string.IsNullOrWhiteSpace(user.SmtpNotificationRecipient))
+            {
+                NotifyPrizeViaSmtp(user.SmtpNotificationRecipient, prize);
+            }
+        }
+
+        void NotifyPrizeViaSmtp(string recipient, Prize prize)
+        {
+            logger.Info(
+                MyOperation.SmtpNotification,
+                OperationStatus.Started,
+                new LogInfo(MyLogInfoKey.PrizeId, prize.Id),
+                new LogInfo(MyLogInfoKey.Recipient, recipient));
+
+            try
+            {
+                smtpNotifier.Send(
+                    recipient,
+                    "Profi Prize Won!",
+                    $"User ID: {prize.UserId}\nPrize ID: {prize.Id}\nTimestamp: {prize.Timestamp}");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(
+                    MyOperation.SmtpNotification,
+                    OperationStatus.Failure,
+                    ex,
+                    new LogInfo(MyLogInfoKey.PrizeId, prize.Id),
+                    new LogInfo(MyLogInfoKey.Recipient, recipient));
+
+                throw;
+            }
+
+            logger.Debug(
+                MyOperation.SmtpNotification,
+                OperationStatus.Success,
+                new LogInfo(MyLogInfoKey.PrizeId, prize.Id),
+                new LogInfo(MyLogInfoKey.Recipient, recipient));
         }
 
         void ValidateRequest<TRequest>(string userId, TRequest request) where TRequest : Request
