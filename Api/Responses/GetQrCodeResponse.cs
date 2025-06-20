@@ -6,7 +6,7 @@ namespace ProfiBotServer.Api.Responses
     public class GetQrCodeResponse : SuccessResponse
     {
         [HmacOrder(1)]
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         [HmacIgnore]
         public string Url { get; set; }

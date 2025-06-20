@@ -13,7 +13,7 @@ using ProfiBotServer.Service.Models;
 namespace ProfiBotServer.Service
 {
     public class QrCodeService(
-        IRepository<long, QrCodeEntity> qrCodeRepository,
+        IRepository<QrCodeEntity> qrCodeRepository,
         IRepository<UserEntity> userRepository,
         IMapper mapper,
         ILogger logger) : IQrCodeService
@@ -29,7 +29,7 @@ namespace ProfiBotServer.Service
 
             QrCode qrCode = new()
             {
-                Id = 0,
+                Id = "0",
                 Description = "TODO"
             };
 
