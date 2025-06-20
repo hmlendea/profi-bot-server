@@ -26,6 +26,7 @@ namespace ProfiBotServer
         {
             var dataStoreSettings = app.ApplicationServices.GetRequiredService<DataStoreSettings>();
             CreateStoreIfMissing(dataStoreSettings.PrizeStorePath);
+            CreateStoreIfMissing(dataStoreSettings.QrCodeStorePath);
             CreateStoreIfMissing(dataStoreSettings.UserStorePath);
 
             if (env.IsDevelopment())

@@ -4,6 +4,8 @@ namespace ProfiBotServer.Configuration
     {
         public string PrizeStorePath { get; set; }
 
+        public string QrCodeStorePath { get; set; }
+
         public string UserStorePath { get; set; }
     }
 }

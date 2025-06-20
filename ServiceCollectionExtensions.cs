@@ -39,6 +39,7 @@ namespace ProfiBotServer
         public static IServiceCollection AddCustomServices(this IServiceCollection services) => services
             .AddSingleton<ILogger, NuciLogger>()
             .AddSingleton<IRepository<PrizeEntity>>(x => new JsonRepository<PrizeEntity>(dataStoreSettings.PrizeStorePath))
+            .AddSingleton<IRepository<long, QrCodeEntity>>(x => new JsonRepository<long, QrCodeEntity>(dataStoreSettings.QrCodeStorePath))
             .AddSingleton<IRepository<UserEntity>>(x => new JsonRepository<UserEntity>(dataStoreSettings.UserStorePath))
             .AddSingleton<ISmtpNotifier, SmtpNotifier>()
             .AddSingleton<IPrizeService, PrizeService>()
