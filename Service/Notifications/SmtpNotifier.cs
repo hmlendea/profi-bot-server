@@ -13,7 +13,6 @@ namespace ProfiBotServer.Service.Notifications
         {
             try
             {
-
                 using var client = new SmtpClient(smtpNotifierSettings.Host, smtpNotifierSettings.Port)
                 {
                     Credentials = new NetworkCredential(smtpNotifierSettings.Username, smtpNotifierSettings.Password),
