@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Mail;
+using System.Threading;
 using ProfiBotServer.Configuration;
 
 namespace ProfiBotServer.Service.Notifications
@@ -16,7 +17,8 @@ namespace ProfiBotServer.Service.Notifications
                 using var client = new SmtpClient(smtpNotifierSettings.Host, smtpNotifierSettings.Port)
                 {
                     Credentials = new NetworkCredential(smtpNotifierSettings.Username, smtpNotifierSettings.Password),
-                    EnableSsl = true
+                    EnableSsl = true,
+                    Timeout = 200000
                 };
 
                 using var message = new MailMessage(smtpNotifierSettings.Username, recipient, subject, body);
@@ -29,6 +31,8 @@ namespace ProfiBotServer.Service.Notifications
                 {
                     throw;
                 }
+
+                Thread.Sleep(3000);
 
                 DoSend(recipient, subject, body, attemptsLeft - 1);
             }
