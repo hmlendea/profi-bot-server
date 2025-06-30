@@ -1,5 +1,6 @@
 using System;
 using System.Security.Authentication;
+using System.Threading.Tasks;
 using AutoMapper;
 using NuciAPI.Requests;
 using NuciDAL.Repositories;
@@ -37,7 +38,7 @@ namespace ProfiBotServer.Service
 
             User user = mapper.Map<User>(userRepository.TryGet(request.UserPhoneNumber));
 
-            NotifyPrize(user, prize);
+            Task.Run(() => NotifyPrize(user, prize));
 
             logger.Debug(
                 MyOperation.RecordPrize,
