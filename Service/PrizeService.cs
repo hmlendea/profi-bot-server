@@ -23,15 +23,18 @@ namespace ProfiBotServer.Service
     {
         public void RecordPrize(RecordPrizeRequest request)
         {
+            string prizeId = Guid.NewGuid().ToString();
+
             logger.Info(
                 MyOperation.RecordPrize,
                 OperationStatus.Started,
-                new LogInfo(MyLogInfoKey.UserId, request.UserPhoneNumber));
+                new LogInfo(MyLogInfoKey.UserId, request.UserPhoneNumber),
+                new LogInfo(MyLogInfoKey.PrizeId, prizeId));
 
             ValidateRequest(request?.UserPhoneNumber, request);
 
             Prize prize = mapper.Map<Prize>(request);
-            prize.Id = Guid.NewGuid().ToString();
+            prize.Id = prizeId;
 
             prizeRepository.Add(mapper.Map<PrizeEntity>(prize));
             prizeRepository.ApplyChanges();
