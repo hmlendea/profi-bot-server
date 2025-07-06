@@ -15,11 +15,11 @@ namespace ProfiBotServer.Api.Requests
         public string Description { get; set; }
 
         [HmacOrder(3)]
-        [JsonPropertyName("phoneNr")]
-        public string UserPhoneNumber { get; set; }
-
-        [HmacOrder(4)]
         [JsonPropertyName("enabled")]
         public bool IsEnabled { get; set; }
+
+        [HmacOrder(4)]
+        [JsonPropertyName("phoneNr")]
+        public string UserPhoneNumber { get; set; }
     }
 }
