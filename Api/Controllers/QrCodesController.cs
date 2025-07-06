@@ -44,7 +44,7 @@ namespace ProfiBotServer.Api.Controllers
 
             try
             {
-                GetQrCodeResponse response = service.GetRandom(request);
+                GetQrCodeResponse response = service.GetRandomEnabled(request);
 
                 if (response is null)
                 {

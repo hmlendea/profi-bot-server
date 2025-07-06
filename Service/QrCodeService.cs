@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.Security.Authentication;
 using AutoMapper;
 using NuciAPI.Requests;
 using NuciDAL.Repositories;
+using NuciExtensions;
 using NuciLog.Core;
 using NuciSecurity.HMAC;
 using ProfiBotServer.Api.Requests;
@@ -45,7 +47,7 @@ namespace ProfiBotServer.Service
                 new LogInfo(MyLogInfoKey.QrCodeId, qrCode.Id));
         }
 
-        public GetQrCodeResponse GetRandom(GetQrCodeRequest request)
+        public GetQrCodeResponse GetRandomEnabled(GetQrCodeRequest request)
         {
             logger.Info(
                 MyOperation.GetQrCode,
@@ -55,7 +57,7 @@ namespace ProfiBotServer.Service
             ValidateRequest(request?.UserPhoneNumber, request);
 
             User user = mapper.Map<User>(userRepository.Get(request.UserPhoneNumber));
-            QrCode qrCode = mapper.Map<QrCode>(qrCodeRepository.GetRandom());
+            QrCode qrCode = mapper.Map<QrCode>(qrCodeRepository.GetAll().Where(qr => qr.IsEnabled).GetRandomElement());
 
             GetQrCodeResponse response = new()
             {
