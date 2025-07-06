@@ -7,5 +7,7 @@ namespace ProfiBotServer.Service.Models
         public string Description { get; set; }
 
         public string Url => $"https://qr.profi.ro/checkin?l={Id}";
+
+        public bool IsEnabled { get; set; }
     }
 }

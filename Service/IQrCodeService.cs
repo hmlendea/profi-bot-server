@@ -7,6 +7,6 @@ namespace ProfiBotServer.Service
     {
         void Add(AddQrCodeRequest request);
 
-        GetQrCodeResponse GetRandom(GetQrCodeRequest request);
+        GetQrCodeResponse GetRandomEnabled(GetQrCodeRequest request);
     }
 }
