@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using NuciAPI.Requests;
 using NuciSecurity.HMAC;
@@ -18,7 +19,11 @@ namespace ProfiBotServer.Api.Requests
         [JsonPropertyName("enabled")]
         public bool IsEnabled { get; set; }
 
+        [Required]
         [HmacOrder(4)]
+        public string StoreType { get; set; }
+
+        [HmacOrder(5)]
         [JsonPropertyName("phoneNr")]
         public string UserPhoneNumber { get; set; }
     }

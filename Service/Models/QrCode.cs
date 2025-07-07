@@ -9,5 +9,7 @@ namespace ProfiBotServer.Service.Models
         public string Url => $"https://qr.profi.ro/checkin?l={Id}";
 
         public bool IsEnabled { get; set; }
+
+        public StoreType StoreType { get; set; }
     }
 }

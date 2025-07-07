@@ -34,7 +34,8 @@ namespace ProfiBotServer.Service
             QrCode qrCode = new()
             {
                 Id = request.Id,
-                Description = request.Description
+                Description = request.Description,
+                StoreType = StoreType.FromId(request.StoreType)
             };
 
             qrCodeRepository.Add(mapper.Map<QrCodeEntity>(qrCode));
@@ -63,7 +64,8 @@ namespace ProfiBotServer.Service
             {
                 Id = qrCode.Id,
                 Url = qrCode.Url,
-                Description = qrCode.Description
+                Description = qrCode.Description,
+                StoreType = qrCode.StoreType
             };
             response.HmacToken = HmacEncoder.GenerateToken(response, user.Password);
 
