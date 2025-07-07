@@ -5,6 +5,7 @@ using ProfiBotServer.Api.Requests;
 using ProfiBotServer.Service;
 
 using NuciAPI.Responses;
+using System.Security;
 
 namespace ProfiBotServer.Api.Controllers
 {
@@ -25,6 +26,10 @@ namespace ProfiBotServer.Api.Controllers
                 service.RecordPrize(request);
 
                 return Ok(SuccessResponse.Default);
+            }
+            catch (SecurityException ex)
+            {
+                return Unauthorized(new ErrorResponse(ex));
             }
             catch (Exception ex)
             {
