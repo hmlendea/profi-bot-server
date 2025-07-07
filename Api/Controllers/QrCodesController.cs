@@ -6,7 +6,7 @@ using ProfiBotServer.Api.Requests;
 using NuciAPI.Responses;
 using ProfiBotServer.Service;
 using ProfiBotServer.Api.Responses;
-using ProfiBotServer.Service.Models;
+using System.Security;
 
 namespace ProfiBotServer.Api.Controllers
 {
@@ -27,6 +27,10 @@ namespace ProfiBotServer.Api.Controllers
                 service.Add(request);
 
                 return Ok(SuccessResponse.Default);
+            }
+            catch (SecurityException ex)
+            {
+                return Unauthorized(new ErrorResponse(ex));
             }
             catch (Exception ex)
             {
@@ -52,6 +56,10 @@ namespace ProfiBotServer.Api.Controllers
                 }
 
                 return Ok(response);
+            }
+            catch (SecurityException ex)
+            {
+                return Unauthorized(new ErrorResponse(ex));
             }
             catch (Exception ex)
             {
