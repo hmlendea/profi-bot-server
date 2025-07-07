@@ -10,6 +10,9 @@ namespace ProfiBotServer.DataAccess.DataObjects
         [JsonPropertyName("enabled")]
         public bool IsEnabled { get; set; }
 
+        [JsonPropertyName("storeName")]
+        public string StoreName { get; set; }
+
         [JsonPropertyName("storeType")]
         public string StoreType { get; set; }
     }

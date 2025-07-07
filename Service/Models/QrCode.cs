@@ -10,6 +10,8 @@ namespace ProfiBotServer.Service.Models
 
         public bool IsEnabled { get; set; }
 
+        public string StoreName { get; set; }
+
         public StoreType StoreType { get; set; }
     }
 }
