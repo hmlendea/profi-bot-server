@@ -19,6 +19,9 @@ namespace ProfiBotServer.Api.Requests
         public bool IsEnabled { get; set; }
 
         [HmacOrder(4)]
+        public string StoreType { get; set; }
+
+        [HmacOrder(5)]
         [JsonPropertyName("phoneNr")]
         public string UserPhoneNumber { get; set; }
     }

@@ -16,6 +16,9 @@ namespace ProfiBotServer.Api.Responses
         public string Description { get; set; }
 
         [HmacOrder(4)]
+        public string StoreType { get; set; }
+
+        [HmacOrder(5)]
         [JsonPropertyName("enabled")]
         public bool IsEnabled { get; set; }
     }
