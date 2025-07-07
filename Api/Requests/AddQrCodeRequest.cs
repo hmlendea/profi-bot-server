@@ -21,9 +21,15 @@ namespace ProfiBotServer.Api.Requests
 
         [Required]
         [HmacOrder(4)]
+        [JsonPropertyName("storeName")]
+        public string StoreName { get; set; }
+
+        [Required]
+        [HmacOrder(5)]
+        [JsonPropertyName("storeType")]
         public string StoreType { get; set; }
 
-        [HmacOrder(5)]
+        [HmacOrder(6)]
         [JsonPropertyName("phoneNr")]
         public string UserPhoneNumber { get; set; }
     }
