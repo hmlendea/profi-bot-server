@@ -39,12 +39,17 @@ namespace ProfiBotServer.Service.Models
                 return false;
             }
 
+            if (Id is null && other.Id is null)
+            {
+                return true;
+            }
+
             if (ReferenceEquals(this, other))
             {
                 return true;
             }
 
-            return Id == other.Id;
+            return Id.Equals(other.Id);
         }
 
         public override bool Equals(object obj)
@@ -52,11 +57,6 @@ namespace ProfiBotServer.Service.Models
             if (obj is null)
             {
                 return false;
-            }
-
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
             }
 
             if (obj.GetType().NotEquals(GetType()))
@@ -67,11 +67,24 @@ namespace ProfiBotServer.Service.Models
             return Equals((StoreType)obj);
         }
 
-        public override int GetHashCode() => 613 ^ Id.GetHashCode();
+        public override int GetHashCode() => 948 ^ Id.GetHashCode();
 
         public override string ToString() => Id;
 
-        public static StoreType FromId(string id) => values[id];
+        public static StoreType FromId(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException(nameof(id), "Store type ID cannot be null or empty.");
+            }
+
+            if (!values.TryGetValue(id, out StoreType value))
+            {
+                throw new KeyNotFoundException($"Store type '{id}' does not exist.");
+            }
+
+            return value;
+        }
 
         public static bool operator ==(StoreType current, StoreType other) => current.Equals(other);
 
