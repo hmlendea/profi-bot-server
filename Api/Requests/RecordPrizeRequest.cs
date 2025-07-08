@@ -4,7 +4,7 @@ using NuciSecurity.HMAC;
 
 namespace ProfiBotServer.Api.Requests
 {
-    public class RecordPrizeRequest : Request
+    public class RecordPrizeRequest : NuciApiRequest
     {
         [HmacOrder(1)]
         [JsonPropertyName("timestamp")]

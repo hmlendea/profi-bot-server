@@ -2,11 +2,10 @@ using System;
 
 using Microsoft.AspNetCore.Mvc;
 using ProfiBotServer.Api.Requests;
-
-using NuciAPI.Responses;
 using ProfiBotServer.Service;
 using ProfiBotServer.Api.Responses;
 using System.Security;
+using NuciAPI.Responses;
 
 namespace ProfiBotServer.Api.Controllers
 {
@@ -19,22 +18,22 @@ namespace ProfiBotServer.Api.Controllers
         {
             if (request is null)
             {
-                return BadRequest(new ErrorResponse(ErrorResponseMessages.InvalidRequest));
+                return BadRequest(NuciApiErrorResponse.InvalidRequest);
             }
 
             try
             {
                 service.Add(request);
 
-                return Ok(SuccessResponse.Default);
+                return Ok(NuciApiSuccessResponse.Default);
             }
             catch (SecurityException ex)
             {
-                return Unauthorized(new ErrorResponse(ex));
+                return Unauthorized(new NuciApiErrorResponse(ex));
             }
             catch (Exception ex)
             {
-                return BadRequest(new ErrorResponse(ex));
+                return BadRequest(new NuciApiErrorResponse(ex));
             }
         }
 
@@ -43,7 +42,7 @@ namespace ProfiBotServer.Api.Controllers
         {
             if (request is null)
             {
-                return BadRequest(new ErrorResponse(ErrorResponseMessages.InvalidRequest));
+                return BadRequest(NuciApiErrorResponse.InvalidRequest);
             }
 
             try
@@ -52,18 +51,18 @@ namespace ProfiBotServer.Api.Controllers
 
                 if (response is null)
                 {
-                    return NotFound(new ErrorResponse("No QR code was found."));
+                    return NotFound(new NuciApiErrorResponse("No QR code was found."));
                 }
 
                 return Ok(response);
             }
             catch (SecurityException ex)
             {
-                return Unauthorized(new ErrorResponse(ex));
+                return Unauthorized(new NuciApiErrorResponse(ex));
             }
             catch (Exception ex)
             {
-                return BadRequest(new ErrorResponse(ex));
+                return BadRequest(new NuciApiErrorResponse(ex));
             }
         }
     }

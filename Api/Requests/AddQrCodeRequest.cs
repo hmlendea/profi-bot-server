@@ -5,7 +5,7 @@ using NuciSecurity.HMAC;
 
 namespace ProfiBotServer.Api.Requests
 {
-    public class AddQrCodeRequest : Request
+    public class AddQrCodeRequest : NuciApiRequest
     {
         [HmacOrder(1)]
         [JsonPropertyName("id")]

@@ -5,7 +5,6 @@ using AutoMapper;
 using NuciAPI.Requests;
 using NuciDAL.Repositories;
 using NuciLog.Core;
-using NuciSecurity.HMAC;
 using ProfiBotServer.Api.Requests;
 using ProfiBotServer.DataAccess.DataObjects;
 using ProfiBotServer.Logging;
@@ -92,7 +91,7 @@ namespace ProfiBotServer.Service
                 new LogInfo(MyLogInfoKey.Recipient, recipient));
         }
 
-        void ValidateRequest<TRequest>(string userId, TRequest request) where TRequest : Request
+        void ValidateRequest<TRequest>(string userId, TRequest request) where TRequest : NuciApiRequest
         {
             UserEntity userEntity = userRepository.TryGet(userId);
 
@@ -113,7 +112,7 @@ namespace ProfiBotServer.Service
 
             try
             {
-                HmacValidator.Validate(request.HmacToken, request, user.Password);
+                request.ValidateHMAC(user.Password);
             }
             catch (Exception ex)
             {
