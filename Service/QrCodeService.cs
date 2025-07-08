@@ -6,7 +6,6 @@ using NuciAPI.Requests;
 using NuciDAL.Repositories;
 using NuciExtensions;
 using NuciLog.Core;
-using NuciSecurity.HMAC;
 using ProfiBotServer.Api.Requests;
 using ProfiBotServer.Api.Responses;
 using ProfiBotServer.DataAccess.DataObjects;
@@ -71,7 +70,7 @@ namespace ProfiBotServer.Service
                 StoreType = qrCode.StoreType,
                 IsEnabled = qrCode.IsEnabled
             };
-            response.HmacToken = HmacEncoder.GenerateToken(response, user.Password);
+            response.SignHMAC(user.Password);
 
             logger.Debug(
                 MyOperation.GetQrCode,
@@ -82,7 +81,7 @@ namespace ProfiBotServer.Service
             return response;
         }
 
-        void ValidateRequest<TRequest>(string userId, TRequest request) where TRequest : Request
+        void ValidateRequest<TRequest>(string userId, TRequest request) where TRequest : NuciApiRequest
         {
             UserEntity userEntity = userRepository.TryGet(userId);
 
@@ -103,7 +102,7 @@ namespace ProfiBotServer.Service
 
             try
             {
-                HmacValidator.Validate(request.HmacToken, request, user.Password);
+                request.ValidateHMAC(user.Password);
             }
             catch (Exception ex)
             {

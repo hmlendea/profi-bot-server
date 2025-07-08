@@ -4,7 +4,7 @@ using NuciSecurity.HMAC;
 
 namespace ProfiBotServer.Api.Responses
 {
-    public class GetQrCodeResponse : SuccessResponse
+    public class GetQrCodeResponse : NuciApiSuccessResponse
     {
         [HmacOrder(1)]
         public string Id { get; set; }

@@ -3,9 +3,8 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using ProfiBotServer.Api.Requests;
 using ProfiBotServer.Service;
-
-using NuciAPI.Responses;
 using System.Security;
+using NuciAPI.Responses;
 
 namespace ProfiBotServer.Api.Controllers
 {
@@ -18,22 +17,22 @@ namespace ProfiBotServer.Api.Controllers
         {
             if (request is null)
             {
-                return BadRequest(new ErrorResponse(ErrorResponseMessages.InvalidRequest));
+                return BadRequest(NuciApiErrorResponse.InvalidRequest);
             }
 
             try
             {
                 service.RecordPrize(request);
 
-                return Ok(SuccessResponse.Default);
+                return Ok(NuciApiSuccessResponse.Default);
             }
             catch (SecurityException ex)
             {
-                return Unauthorized(new ErrorResponse(ex));
+                return Unauthorized(new NuciApiErrorResponse(ex));
             }
             catch (Exception ex)
             {
-                return BadRequest(new ErrorResponse(ex));
+                return BadRequest(new NuciApiErrorResponse(ex));
             }
         }
     }

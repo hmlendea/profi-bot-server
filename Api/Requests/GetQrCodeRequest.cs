@@ -4,7 +4,7 @@ using NuciSecurity.HMAC;
 
 namespace ProfiBotServer.Api.Requests
 {
-    public class GetQrCodeRequest : Request
+    public class GetQrCodeRequest : NuciApiRequest
     {
         [HmacOrder(1)]
         [JsonPropertyName("phoneNr")]
