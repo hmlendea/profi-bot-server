@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Automapper" Version="15.0.0" />
+    <PackageReference Include="Automapper" Version="14.0.0" />
     <PackageReference Include="NuciAPI" Version="2.1.2" />
     <PackageReference Include="NuciDAL" Version="2.4.1" />
     <PackageReference Include="NuciLog" Version="1.1.1" />
