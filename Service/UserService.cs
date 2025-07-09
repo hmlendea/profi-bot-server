@@ -26,7 +26,7 @@ namespace ProfiBotServer.Service
 
             ValidateRequest(MyOperation.GetBalance, request?.UserPhoneNumber, request);
 
-            User user = mapper.Map<User>(userRepository.TryGet(request.UserPhoneNumber));
+            User user = mapper.Map<User>(userRepository.Get(request.UserPhoneNumber));
 
             GetUserBalanceResponse response = new()
             {
@@ -42,6 +42,29 @@ namespace ProfiBotServer.Service
                 new LogInfo(MyLogInfoKey.Balance, response.Balance));
 
             return response;
+        }
+
+        public void UpdateBalance(UpdateUserBalanceRequest request)
+        {
+            logger.Info(
+                MyOperation.UpdateBalance,
+                OperationStatus.Started,
+                new LogInfo(MyLogInfoKey.UserId, request.UserPhoneNumber),
+                new LogInfo(MyLogInfoKey.Balance, request.Balance));
+
+            ValidateRequest(MyOperation.UpdateBalance, request?.UserPhoneNumber, request);
+
+            UserEntity user = userRepository.Get(request.UserPhoneNumber);
+            user.Balance = request.Balance;
+
+            userRepository.Update(user);
+            userRepository.ApplyChanges();
+
+            logger.Debug(
+                MyOperation.UpdateBalance,
+                OperationStatus.Success,
+                new LogInfo(MyLogInfoKey.UserId, request.UserPhoneNumber),
+                new LogInfo(MyLogInfoKey.Balance, request.Balance));
         }
 
         void ValidateRequest<TRequest>(Operation operation, string userId, TRequest request) where TRequest : NuciApiRequest

@@ -14,6 +14,8 @@ namespace ProfiBotServer.Logging
 
         public static Operation GetQrCode => new MyOperation(nameof(GetQrCode));
 
+        public static Operation UpdateBalance => new MyOperation(nameof(UpdateBalance));
+
         public static Operation SmtpNotification => new MyOperation(nameof(SmtpNotification));
     }
 }
