@@ -44,6 +44,7 @@ namespace ProfiBotServer
             .AddSingleton<ISmtpNotifier, SmtpNotifier>()
             .AddSingleton<IPrizeService, PrizeService>()
             .AddSingleton<IQrCodeService, QrCodeService>()
+            .AddSingleton<IUserService, UserService>()
             .AddAutoMapper(typeof(DataAccessMappingProfile))
             .AddAutoMapper(typeof(ServiceMappingProfile));
     }
