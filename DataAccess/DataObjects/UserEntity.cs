@@ -8,6 +8,8 @@ namespace ProfiBotServer.DataAccess.DataObjects
 
         public string Description { get; set; }
 
+        public decimal Balance { get; set; }
+
         public string SmtpNotificationRecipient { get; set; }
     }
 }
