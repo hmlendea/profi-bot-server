@@ -67,10 +67,12 @@ namespace ProfiBotServer.Service
 
             try
             {
+                User user = mapper.Map<User>(userRepository.TryGet(prize.UserId));
+
                 smtpNotifier.Send(
                     recipient,
                     "Profi Prize Won!",
-                    $"User ID: {prize.UserId}\nPrize ID: {prize.Id}\nTimestamp: {prize.Timestamp}");
+                    $"User: {user.Description} ({user.Id})\nPrize ID: {prize.Id}\nTimestamp: {prize.Timestamp}");
             }
             catch (Exception ex)
             {
