@@ -6,6 +6,8 @@ namespace ProfiBotServer.Logging
     {
         MyLogInfoKey(string name) : base(name) { }
 
+        public static LogInfoKey Balance => new MyLogInfoKey(nameof(Balance));
+
         public static LogInfoKey PrizeId => new MyLogInfoKey(nameof(PrizeId));
 
         public static LogInfoKey QrCodeId => new MyLogInfoKey(nameof(QrCodeId));
